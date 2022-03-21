@@ -2,6 +2,9 @@ package zuev.nikita;
 
 import java.util.Date;
 
+/**
+ * Структура хранения данных
+ */
 public class Organization implements Comparable<Organization> {
     Organization(Integer id, String name, Coordinates coordinates, Date creationDate, Double annualTurnover, OrganizationType type, Address postalAddress) {
         this.id = id;
@@ -13,13 +16,34 @@ public class Organization implements Comparable<Organization> {
         this.postalAddress = postalAddress;
     }
 
-    private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private Double annualTurnover; //Поле может быть null, Значение поля должно быть больше 0
-    private OrganizationType type; //Поле не может быть null
-    private Address postalAddress; //Поле не может быть null
+    /**
+     * Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+     */
+    private Integer id;
+    /**
+     * Поле не может быть null, Строка не может быть пустой
+     */
+    private String name;
+    /**
+     * Поле не может быть null
+     */
+    private Coordinates coordinates;
+    /**
+     * Поле не может быть null, Значение этого поля должно генерироваться автоматически
+     */
+    private Date creationDate;
+    /**
+     * Поле может быть null, Значение поля должно быть больше 0
+     */
+    private Double annualTurnover;
+    /**
+     * Поле не может быть null
+     */
+    private OrganizationType type;
+    /**
+     * Поле не может быть null
+     */
+    private Address postalAddress;
 
     public Integer getId() {
         return id;
@@ -79,25 +103,32 @@ public class Organization implements Comparable<Organization> {
 
     @Override
     public int compareTo(Organization o) {
-        int compare = id.compareTo(o.getId());
+        int compare = name.compareTo(o.getName());
         if (compare == 0) {
-            compare = name.compareTo(o.getName());
+            compare = coordinates.compareTo(o.getCoordinates());
             if (compare == 0) {
-                compare = coordinates.compareTo(o.getCoordinates());
+                compare = annualTurnover.compareTo(o.getAnnualTurnover());
                 if (compare == 0) {
-                    compare = creationDate.compareTo(o.getCreationDate());
+                    compare = postalAddress.compareTo(o.getPostalAddress());
                     if (compare == 0) {
-                        compare = annualTurnover.compareTo(o.getAnnualTurnover());
-                        if (compare == 0) {
-                            compare = postalAddress.compareTo(o.getPostalAddress());
-                            if (compare == 0) {
-                                compare = type.compareTo(o.getType());
-                            }
-                        }
+                        compare = type.compareTo(o.getType());
                     }
                 }
             }
         }
         return compare;
+    }
+
+    @Override
+    public String toString() {
+        return "-- id:\t\t\t" + id + '\n' +
+                "-- name:\t\t" + name + '\n' +
+                "-- coordinates:\n" +
+                "-- -- x:\t\t" + coordinates.getX() + '\n' +
+                "-- -- y:\t\t" + coordinates.getY() + '\n' +
+                "-- creationDate:\t" + creationDate + '\n' +
+                "-- annualTurnover:\t" + annualTurnover + '\n' +
+                "-- type:\t\t" + type + '\n' +
+                "-- postalAddress:\t" + postalAddress.getZipCode();
     }
 }

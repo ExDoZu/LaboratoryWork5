@@ -1,13 +1,22 @@
 package zuev.nikita;
 
+/**
+ * Координаты организации.
+ */
 public class Coordinates implements Comparable<Coordinates> {
     Coordinates(long x, Double y) {
         this.x = x;
         this.y = y;
     }
 
-    private long x; //Максимальное значение поля: 923
-    private Double y; //Поле не может быть null
+    /**
+     * Максимальное значение поля: 923
+     */
+    private long x;
+    /**
+     * Поле не может быть null
+     */
+    private Double y;
 
     public long getX() {
         return x;
@@ -27,13 +36,6 @@ public class Coordinates implements Comparable<Coordinates> {
 
     @Override
     public int compareTo(Coordinates o) {
-        double value = (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) - Math.sqrt(Math.pow(o.getX(), 2) + Math.pow(o.getY(), 2)));
-        if (value < 0) {
-            return -1;
-        } else if (value == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return Double.compare(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)), Math.sqrt(Math.pow(o.getX(), 2) + Math.pow(o.getY(), 2)));
     }
 }

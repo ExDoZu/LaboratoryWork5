@@ -1,9 +1,15 @@
 package zuev.nikita;
 
-public class Address implements Comparable<Address>{
-    private String zipCode; //Поле может быть null
+/**
+ * Адрес. Часть структуры Organization.
+ */
+public class Address implements Comparable<Address> {
+    /**
+     * Поле может быть null
+     */
+    private String zipCode;
 
-    Address(String postalAddress){
+    Address(String postalAddress) {
         this.zipCode = postalAddress;
     }
 
@@ -17,6 +23,14 @@ public class Address implements Comparable<Address>{
 
     @Override
     public int compareTo(Address o) {
-        return zipCode.compareTo(o.getZipCode());
+        if (zipCode == null && o.getZipCode() != null) return -1;
+        else if (zipCode != null && o.getZipCode() == null) return 1;
+        else if (zipCode == null && o.getZipCode() == null) return 0;
+        else return zipCode.compareTo(o.getZipCode());
+    }
+
+    @Override
+    public String toString() {
+        return "Address: " + zipCode;
     }
 }
