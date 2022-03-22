@@ -87,7 +87,6 @@ public class JsonDataHandler {
 
         while (flag) {
             file = new File(path);
-            //todo обработать случаи, когда проблемы с правами доступа.
             try (Scanner fileInput = new Scanner(file)) {
                 while (fileInput.hasNextLine())
                     inputString += fileInput.nextLine().trim();
@@ -95,10 +94,10 @@ public class JsonDataHandler {
                 flag = false;
             } catch (FileNotFoundException e) {
                 System.out.println("Указанный вами файл не обнаружен. Введите новый путь к файлу. Для закрытия программы введите команду exit.");
-            } catch (ParseException e) {
-                System.out.println("Структура файла некорректна или файл поврежден. Введите путь к другому файлу. Для закрытия программы введите команду exit.");
             } catch (WrongDataException e) {
                 System.out.println("В файле содержатся некорректные данные. " + e.getMessage() + " Введите путь к другому файлу. Для закрытия программы введите команду exit.");
+            } catch (Exception e) {
+                System.out.println("Структура файла некорректна или файл поврежден. Введите путь к другому файлу. Для закрытия программы введите команду exit.");
             }
             if (flag) {
                 path = input.nextLine();
