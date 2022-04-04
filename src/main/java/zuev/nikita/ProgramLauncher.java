@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
  *
  * @author Никита Зуев
  */
-public class ProgrammLauncher {
+public class ProgramLauncher {
     /**
      * Запуск программы и обработчика команд.
      *
