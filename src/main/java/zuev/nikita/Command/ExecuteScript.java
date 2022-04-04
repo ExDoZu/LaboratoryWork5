@@ -27,6 +27,7 @@ public class ExecuteScript implements Command {
      */
     @Override
     public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
+        if(arg==null)return "Не указан путь к файлу.";
         if (recursionDepth < 10) {
             recursionDepth++;
             Scanner scanner = new Scanner(new File(arg));
