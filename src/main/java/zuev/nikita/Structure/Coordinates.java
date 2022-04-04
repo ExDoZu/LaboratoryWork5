@@ -1,10 +1,10 @@
-package zuev.nikita;
+package zuev.nikita.Structure;
 
 /**
  * Координаты организации.
  */
 public class Coordinates implements Comparable<Coordinates> {
-    Coordinates(long x, Double y) {
+    public Coordinates(long x, Double y) {
         this.x = x;
         this.y = y;
     }

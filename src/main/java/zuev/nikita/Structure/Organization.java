@@ -1,4 +1,4 @@
-package zuev.nikita;
+package zuev.nikita.Structure;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import java.util.Date;
  * Структура хранения данных
  */
 public class Organization implements Comparable<Organization> {
-    Organization(Integer id, String name, Coordinates coordinates, Date creationDate, Double annualTurnover, OrganizationType type, Address postalAddress) {
+    public Organization(Integer id, String name, Coordinates coordinates, Date creationDate, Double annualTurnover, OrganizationType type, Address postalAddress) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;

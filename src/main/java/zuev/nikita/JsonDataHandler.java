@@ -4,6 +4,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import zuev.nikita.Structure.Address;
+import zuev.nikita.Structure.Coordinates;
+import zuev.nikita.Structure.Organization;
+import zuev.nikita.Structure.OrganizationType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,9 +20,10 @@ import java.util.*;
 public class JsonDataHandler {
     /**
      * Достает данные из строки в формате Json
+     *
      * @param text Строка в формате Json
      * @return Коллекция, с которой будет работать пользователь.
-     * @throws ParseException Ошибка парсинга. Например, некорректный Json файл.
+     * @throws ParseException     Ошибка парсинга. Например, некорректный Json файл.
      * @throws WrongDataException Данные в неверном формате.
      */
     private static Hashtable<String, Organization> parseText(String text) throws ParseException, WrongDataException {
@@ -75,39 +80,23 @@ public class JsonDataHandler {
 
     /**
      * Чтение файла и получение данных из него.
+     *
      * @param path Путь к файлу.
      * @return Коллекция, с которой будет работать пользователь.
      */
-    public static Hashtable<String, Organization> parseFile(String path) {
-        File file;
-        String inputString = "";
-        Scanner input = new Scanner(System.in);
-        boolean flag = true;
-        Hashtable<String, Organization> hashtable = null;
-
-        while (flag) {
-            file = new File(path);
-            try (Scanner fileInput = new Scanner(file)) {
-                while (fileInput.hasNextLine())
-                    inputString += fileInput.nextLine().trim();
-                hashtable = parseText(inputString);
-                flag = false;
-            } catch (FileNotFoundException e) {
-                System.out.println("Указанный вами файл не обнаружен. Введите новый путь к файлу. Для закрытия программы введите команду exit.");
-            } catch (WrongDataException e) {
-                System.out.println("В файле содержатся некорректные данные. " + e.getMessage() + " Введите путь к другому файлу. Для закрытия программы введите команду exit.");
-            } catch (Exception e) {
-                System.out.println("Структура файла некорректна или файл поврежден. Введите путь к другому файлу. Для закрытия программы введите команду exit.");
-            }
-            if (flag) {
-                path = input.nextLine();
-                if (path.equals("exit")) break;
-            }
-        }
-        return hashtable;
+    public static Hashtable<String, Organization> parseFile(String path) throws FileNotFoundException, WrongDataException, ParseException {
+        StringBuilder inputString = new StringBuilder();
+        File file = new File(path);
+        Scanner fileInput = new Scanner(file);
+        while (fileInput.hasNextLine())
+            inputString.append(fileInput.nextLine().trim());
+        if (inputString.length() == 0) return new Hashtable<>();
+        else return parseText(inputString.toString());
     }
+
     /**
      * Преобразовывает структуру Hashtable в строку в формате Json.
+     *
      * @param hashtable Сама коллекция, собственно.
      * @return String
      */

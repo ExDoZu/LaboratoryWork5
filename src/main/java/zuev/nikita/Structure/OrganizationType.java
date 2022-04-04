@@ -1,4 +1,4 @@
-package zuev.nikita;
+package zuev.nikita.Structure;
 
 /**
  * Типы организации.
@@ -6,5 +6,5 @@ package zuev.nikita;
 public enum OrganizationType {
     COMMERCIAL,
     PUBLIC,
-    TRUST;
+    TRUST
 }

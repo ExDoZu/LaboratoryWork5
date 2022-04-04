@@ -1,4 +1,4 @@
-package zuev.nikita;
+package zuev.nikita.Structure;
 
 /**
  * Адрес. Часть структуры Organization.
@@ -9,7 +9,7 @@ public class Address implements Comparable<Address> {
      */
     private String zipCode;
 
-    Address(String postalAddress) {
+    public Address(String postalAddress) {
         this.zipCode = postalAddress;
     }
 
