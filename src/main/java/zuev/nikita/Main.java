@@ -5,7 +5,7 @@ package zuev.nikita;
  */
 public class Main {
     public static void main(String[] args) {
-        ProgrammLauncher programmLauncher=new ProgrammLauncher();
+        ProgramLauncher programmLauncher=new ProgramLauncher();
         programmLauncher.launch(args[0]);
 
 
