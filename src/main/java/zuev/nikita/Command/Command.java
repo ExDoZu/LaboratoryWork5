@@ -8,6 +8,9 @@ import zuev.nikita.Structure.OrganizationType;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Интерфейс для команд (command pattern)
+ */
 public interface Command {
     /**
      * @param arg         Аргумент команды

@@ -24,6 +24,7 @@ public class Save implements Command {
         File file = new File(savePath);
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(JsonDataHandler.hashtableToString(hashtable));
+        fileWriter.close();
         return "Данные сохранены.";
     }
 
