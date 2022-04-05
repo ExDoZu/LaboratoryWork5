@@ -18,10 +18,13 @@ public interface Command {
      * @param savePath    файл для сохранения структуры
      * @param history     история команд
      * @param commandList список команд
-     * @return резултат/отчет работы команды
+     * @return результат/отчет работы команды
      */
     String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException;
 
+    /**
+     * Возвращает информацию о команде.
+     */
     String getHelp();
 
     /**

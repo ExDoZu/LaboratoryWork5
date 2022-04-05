@@ -59,20 +59,23 @@ public class Invoker {
                         }
                         break;
                     } catch (FileNotFoundException e) {
-                        if (e.getMessage().equals("Нет доступа к файлу.")) {
-                            System.out.println("Файл для сохранения недоступен. Укажите путь к новому файлу.");
-                            pathToSave = input.nextLine();
+                        if (e.getMessage().equals("Нет доступа к файлу из-за нехватки прав доступа.")) {
+                            System.out.println("Файл для сохранения недоступен из-за нехватки прав доступа. Укажите путь к новому файлу.\n" +
+                                    "cancel - отменить команду сохранения.");
+                            pathToSave = input.nextLine().trim();
                         } else {
                             System.out.println("Файл не найден.");
                             break;
                         }
                     } catch (IOException e) {
-                        System.out.println("Файл для сохранения недоступен. Укажите путь к новому файлу.");
-                        pathToSave = input.nextLine();
+                        System.out.println("Файл для сохранения недоступен из-за нехватки прав доступа. Укажите путь к новому файлу.\n" +
+                                "cancel - отменить команду сохранения.");
+                        pathToSave = input.nextLine().trim();
                     } catch (NumberFormatException e) {
                         System.out.println("ID должен быть целым числом.");
                         break;
                     }
+                    if (pathToSave.equals("cancel")) break;
                 }
             } else {
                 System.out.println("Команда " + fullCommand[0] + " не существует.");

@@ -13,16 +13,19 @@ import java.util.List;
 public class Update implements Command {
     @Override
     public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
-        if(arg==null)return "Не был указан id.";
+        if (arg == null) return "Не был указан id.";
         int id = Integer.parseInt(arg);
-        Organization organization = organizationInput(hashtable);
-        organization.setId(id);
+        boolean foundID = false;
         for (String key : hashtable.keySet())
             if (hashtable.get(key).getId() == id) {
+                foundID = true;
+                Organization organization = organizationInput(hashtable);
+                organization.setId(id);
                 hashtable.replace(key, organization);
                 break;
             }
-        return "Данные успешно обновлены.";
+        if (foundID) return "Данные успешно обновлены.";
+        else return "Нет элемента коллекции с таким ID.";
     }
 
     @Override

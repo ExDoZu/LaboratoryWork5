@@ -28,7 +28,7 @@ public class Save implements Command {
             fileWriter.write(JsonDataHandler.hashtableToString(hashtable));
             fileWriter.close();
         } catch (Exception e) {
-            throw new FileNotFoundException("Нет доступа к файлу.");
+            throw new FileNotFoundException("Нет доступа к файлу из-за нехватки прав доступа.");
         }
 
         return "Данные сохранены.";
