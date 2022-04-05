@@ -3,21 +3,17 @@ package zuev.nikita.Command;
 import zuev.nikita.Structure.Organization;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Выполняет скрипт, написанный в другом файле.
  */
 public class ExecuteScript implements Command {
     /**
-     * Глубина рекурсии при выполнении команды execute_script. Максимальное значение 10.
+     * Содержит выполняемые скрипты.
      */
-    static short recursionDepth = 0;
+    private final static Set<File> scripts= new HashSet<>();
 
     /**
      * @param arg       Путь к файлу со скриптом.
@@ -28,14 +24,15 @@ public class ExecuteScript implements Command {
     @Override
     public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
         if(arg==null)return "Не указан путь к файлу.";
-        if (recursionDepth < 10) {
-            recursionDepth++;
+        File currentScript = new File(arg);
+        if (!scripts.contains(currentScript)) {
+            scripts.add(currentScript);
             Scanner scanner = new Scanner(new File(arg));
             Invoker.invoke(hashtable, savePath, scanner);
             scanner.close();
-            recursionDepth--;
+            scripts.remove(currentScript);
         } else {
-            return "Невозможно одновременно выполнять более 10 файлов-скриптов.";
+            return "Невозможно выполнить скрипт, который уже выполняется.";
         }
         return "Скрипт выполнен успешно.";
     }
