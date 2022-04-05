@@ -4,6 +4,7 @@ import zuev.nikita.JsonDataHandler;
 import zuev.nikita.Structure.Organization;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,9 +23,14 @@ public class Save implements Command {
     @Override
     public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
         File file = new File(savePath);
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(JsonDataHandler.hashtableToString(hashtable));
-        fileWriter.close();
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(JsonDataHandler.hashtableToString(hashtable));
+            fileWriter.close();
+        } catch (Exception e) {
+            throw new FileNotFoundException("Нет доступа к файлу.");
+        }
+
         return "Данные сохранены.";
     }
 

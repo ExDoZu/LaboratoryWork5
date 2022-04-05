@@ -59,8 +59,13 @@ public class Invoker {
                         }
                         break;
                     } catch (FileNotFoundException e) {
-                        System.out.println("Был укзан неверный путь к файлу со скриптом.");
-                        break;
+                        if (e.getMessage().equals("Нет доступа к файлу.")) {
+                            System.out.println("Файл для сохранения недоступен. Укажите путь к новому файлу.");
+                            pathToSave = input.nextLine();
+                        } else {
+                            System.out.println("Файл не найден.");
+                            break;
+                        }
                     } catch (IOException e) {
                         System.out.println("Файл для сохранения недоступен. Укажите путь к новому файлу.");
                         pathToSave = input.nextLine();
