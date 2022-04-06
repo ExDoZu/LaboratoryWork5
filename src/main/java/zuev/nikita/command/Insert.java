@@ -1,6 +1,6 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Вставляет в коллекцию Organization, введенный пользователем вручную по заданному ключу.
+ * Inserts Organization entered manually by the user by the given key into the collection.
  */
 public class Insert implements Command {
     @Override

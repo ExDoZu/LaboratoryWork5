@@ -3,7 +3,9 @@ package zuev.nikita;
 import java.util.Scanner;
 
 /**
- * Здесь-то все и начинается...
+ * This is where it all starts...
+ *
+ * @author Nikita Zuev
  */
 public class Main {
     public static void main(String[] args) {

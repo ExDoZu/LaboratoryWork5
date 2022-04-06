@@ -1,13 +1,13 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Выводит все элементы коллекции в строковом представлении.
+ * Displays all elements of the collection in string representation.
  */
 public class Show implements Command {
     @Override

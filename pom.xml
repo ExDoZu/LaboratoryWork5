@@ -17,6 +17,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
                     <execution>
@@ -28,6 +29,8 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>laba</finalName>
+
     </build>
     <groupId>zuev.nikita</groupId>
     <artifactId>LaboratoryWork5</artifactId>

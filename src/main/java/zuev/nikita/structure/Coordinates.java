@@ -1,7 +1,7 @@
-package zuev.nikita.Structure;
+package zuev.nikita.structure;
 
 /**
- * Координаты организации.
+ * Organization coordinates.
  */
 public class Coordinates implements Comparable<Coordinates> {
     public Coordinates(long x, Double y) {
@@ -10,11 +10,11 @@ public class Coordinates implements Comparable<Coordinates> {
     }
 
     /**
-     * Максимальное значение поля: 923
+     * Maximum field value: 923
      */
     private long x;
     /**
-     * Поле не может быть null
+     * Field cannot be null
      */
     private Double y;
 

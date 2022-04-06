@@ -4,27 +4,26 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import zuev.nikita.Structure.Address;
-import zuev.nikita.Structure.Coordinates;
-import zuev.nikita.Structure.Organization;
-import zuev.nikita.Structure.OrganizationType;
+import zuev.nikita.structure.Address;
+import zuev.nikita.structure.Coordinates;
+import zuev.nikita.structure.Organization;
+import zuev.nikita.structure.OrganizationType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
- * Занимается обработкой Json файла: его чтение, парсинг. Также преобразование структуры Organization в строку в формате
- * Json
+ * Engaged in Json file processing: reading it, parsing it. Also converting the Organization structure to a string in Json format
  */
 public class JsonDataHandler {
     /**
-     * Достает данные из строки в формате Json
+     * Gets data from a string in Json format
      *
-     * @param text Строка в формате Json
-     * @return Коллекция, с которой будет работать пользователь.
-     * @throws ParseException     Ошибка парсинга. Например, некорректный Json файл.
-     * @throws WrongDataException Данные в неверном формате.
+     * @param text String in Json format
+     * @return The collection that the user will work with.
+     * @throws ParseException     Parsing error. For example, incorrect Json file.
+     * @throws WrongDataException The data is in the wrong format.
      */
     private static Hashtable<String, Organization> parseText(String text) throws ParseException, WrongDataException {
         Hashtable<String, Organization> hashtable = new Hashtable<>();
@@ -79,10 +78,13 @@ public class JsonDataHandler {
     }
 
     /**
-     * Чтение файла и получение данных из него.
+     * Reading a file and getting data from it.
      *
-     * @param path Путь к файлу.
-     * @return Коллекция, с которой будет работать пользователь.
+     * @param path Path to the file.
+     * @return Collection that the user will work with.
+     * @throws FileNotFoundException Throws when a file not found
+     * @throws WrongDataException    Throws when data is wrong
+     * @throws ParseException        Throws when a file structure is incorrect
      */
     public static Hashtable<String, Organization> parseFile(String path) throws FileNotFoundException, WrongDataException, ParseException {
         StringBuilder inputString = new StringBuilder();
@@ -95,9 +97,9 @@ public class JsonDataHandler {
     }
 
     /**
-     * Преобразовывает структуру Hashtable в строку в формате Json.
+     * Converts a Hashtable structure to a Json string.
      *
-     * @param hashtable Сама коллекция, собственно.
+     * @param hashtable Collection
      * @return String
      */
     public static String hashtableToString(Hashtable<String, Organization> hashtable) {

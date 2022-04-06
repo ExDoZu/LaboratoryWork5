@@ -1,13 +1,13 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Выводит информацию о коллекции
+ * Returns information about the collection
  */
 public class Info implements Command {
 

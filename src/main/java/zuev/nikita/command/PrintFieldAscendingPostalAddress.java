@@ -1,7 +1,7 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Address;
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Address;
+import zuev.nikita.structure.Organization;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Выводит значения поля postalAddreess всех элементов в порядке возрастания.
+ * Returns the values of the postalAddreess field of all elements in ascending order as a string.
  */
 public class PrintFieldAscendingPostalAddress implements Command {
     @Override

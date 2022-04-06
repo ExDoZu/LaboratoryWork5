@@ -1,6 +1,6 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Удаляет из коллекции элемент по его ключу.
+ * Removes an element from the collection by its key.
  */
 public class RemoveKey implements Command {
     @Override

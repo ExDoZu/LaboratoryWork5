@@ -1,7 +1,7 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
 import zuev.nikita.JsonDataHandler;
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,14 +10,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * Сохраняет коллекцию в файл.
+ * Saves the collection to the file.
  */
 public class Save implements Command {
     /**
-     * @param savePath Путь к файлу для сохранения.
+     * @param savePath Path to the file to save.
      */
 
     @Override

@@ -1,19 +1,19 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
 /**
- * Вызывает команды.
+ * Invoke commands.
  */
 public class Invoker {
     /**
-     * @param hashtable  Hashtable, с которым будет работать пользователь.
-     * @param pathToSave Путь к файлу для сохранения коллекции
-     * @param input      Scanner с известным потоком ввода.
+     * @param hashtable  Hashtable that a user works with.
+     * @param pathToSave Path to the file to save the collection.
+     * @param input      Scanner with given input stream.
      */
     public static void invoke(Hashtable<String, Organization> hashtable, String pathToSave, Scanner input) {
         String[] fullCommand;

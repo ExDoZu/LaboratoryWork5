@@ -1,18 +1,18 @@
-# Лабораторная работа №5
+# Laboratory work №5
 
-### Для сборки и запуска проекта нужно выполнить следующие команды:
+### Input the following commands to build and run the project:
 
 ```shell
 mvn package
 ```
 
 ```shell
-java -jar .\target\LaboratoryWork5-1.0-jar-with-dependencies.jar <filePath>
+java -jar .\target\laba.jar <filePath>
 ```
 
-###### \<filePath> - нужно указать путь к файлу с данными.
+###### \<filePath> - you need to specify the path to the data file.
 
-### Пример корректного файла с данными:
+### An example of a valid data file:
 
 `data.json`
 

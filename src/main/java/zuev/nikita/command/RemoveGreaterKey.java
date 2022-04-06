@@ -1,6 +1,6 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Удаляет из коллекции все элементы, ключ которых превышает заданный.
+ * Removes from the collection all elements whose key is greater than the specified value.
  */
 public class RemoveGreaterKey implements Command {
     /**
-     * @param arg Заданный ключ
+     * @param arg Given key
      */
     @Override
     public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {

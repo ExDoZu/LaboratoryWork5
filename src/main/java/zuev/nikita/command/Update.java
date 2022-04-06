@@ -1,6 +1,6 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Обновляет элемент коллекции по его ID.
+ * Updates the collection element by its ID.
  */
 public class Update implements Command {
     @Override

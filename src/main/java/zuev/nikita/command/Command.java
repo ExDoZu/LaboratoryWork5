@@ -1,36 +1,37 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Address;
-import zuev.nikita.Structure.Coordinates;
-import zuev.nikita.Structure.Organization;
-import zuev.nikita.Structure.OrganizationType;
+import zuev.nikita.structure.Address;
+import zuev.nikita.structure.Coordinates;
+import zuev.nikita.structure.Organization;
+import zuev.nikita.structure.OrganizationType;
 
 import java.io.IOException;
 import java.util.*;
 
 /**
- * Интерфейс для команд (command pattern)
+ * Interface for commands (command pattern)
  */
 public interface Command {
     /**
-     * @param arg         Аргумент команды
-     * @param hashtable   Структура
-     * @param savePath    файл для сохранения структуры
-     * @param history     история команд
-     * @param commandList список команд
-     * @return результат/отчет работы команды
+     * @param arg         Command argument
+     * @param hashtable   Structure
+     * @param savePath    File to save the structure
+     * @param history     Commands history
+     * @param commandList Commands list
+     * @throws IOException Throws when there is problem with file reading or writing.
+     * @return result/report of command execution
      */
     String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException;
 
     /**
-     * Возвращает информацию о команде.
+     * @return Information about the command.
      */
     String getHelp();
 
     /**
-     * Метод для ввода пользователем структуры через поток ввода.
+     * Method for a user to enter a structure through the input stream.
      *
-     * @param hashtable Сама коллекция, собственно.
+     * @param hashtable Collection
      * @return Organization
      */
     default Organization organizationInput(Hashtable<String, Organization> hashtable) {

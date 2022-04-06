@@ -1,16 +1,16 @@
 package zuev.nikita;
 
-import zuev.nikita.Command.Invoker;
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.command.Invoker;
+import zuev.nikita.structure.Organization;
 
 import java.io.File;
 import java.util.*;
 
 
 /**
- * Запускает программу и вызывает обработку команд.
+ * Launch the program and starts command processing.
  *
- * @author Никита Зуев
+ * @author Nikita Zuev
  */
 public class ProgramLauncher {
     /**

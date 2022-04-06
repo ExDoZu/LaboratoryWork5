@@ -1,7 +1,7 @@
 package zuev.nikita;
 
 /**
- * Класс для ошибок в данных, хранящихся в файле или вводимых пользователем.
+ * Class for errors in data stored in a file or entered by the user.
  */
 public class WrongDataException extends Exception {
 

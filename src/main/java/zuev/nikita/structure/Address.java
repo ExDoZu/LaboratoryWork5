@@ -1,11 +1,11 @@
-package zuev.nikita.Structure;
+package zuev.nikita.structure;
 
 /**
- * Адрес. Часть структуры Organization.
+ * Part of the Organization structure.
  */
 public class Address implements Comparable<Address> {
     /**
-     * Поле может быть null
+     * Field can be null
      */
     private String zipCode;
 

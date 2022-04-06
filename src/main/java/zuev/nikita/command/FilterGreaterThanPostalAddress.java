@@ -1,7 +1,7 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Address;
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Address;
+import zuev.nikita.structure.Organization;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,11 +9,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 /**
- * Выводит все элементы, значение поля postalAddress которых превышает заданный.
+ * Returns all elements as a string whose postalAddress field value is greater than the given value.
  */
 public class FilterGreaterThanPostalAddress implements Command {
     /**
-     * @param arg Заданный адрес.
+     * @param arg Given address.
      */
     @Override
     public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {

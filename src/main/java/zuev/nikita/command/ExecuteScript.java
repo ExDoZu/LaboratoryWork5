@@ -1,25 +1,25 @@
-package zuev.nikita.Command;
+package zuev.nikita.command;
 
-import zuev.nikita.Structure.Organization;
+import zuev.nikita.structure.Organization;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 /**
- * Выполняет скрипт, написанный в другом файле.
+ * Executes a script written in another file.
  */
 public class ExecuteScript implements Command {
     /**
-     * Содержит выполняемые скрипты.
+     * Contains current executable scripts.
      */
     private final static Set<File> scripts= new HashSet<>();
 
     /**
-     * @param arg       Путь к файлу со скриптом.
-     * @param savePath  Файл для сохранения коллекции.
-     * @param hashtable Сама коллекция, собственно.
-     * @return Отчет об удачном/неудачном выполнении скрипта.
+     * @param arg Path to the script file.
+     * @param savePath  Path to the file to save the collection.
+     * @param hashtable Collection
+     * @return Script success/failure report.
      */
     @Override
     public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {

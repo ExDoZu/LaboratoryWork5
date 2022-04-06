@@ -1,9 +1,9 @@
-package zuev.nikita.Structure;
+package zuev.nikita.structure;
 
 import java.util.Date;
 
 /**
- * Структура хранения данных
+ * Data storage structure
  */
 public class Organization implements Comparable<Organization> {
     public Organization(Integer id, String name, Coordinates coordinates, Date creationDate, Double annualTurnover, OrganizationType type, Address postalAddress) {
@@ -17,31 +17,31 @@ public class Organization implements Comparable<Organization> {
     }
 
     /**
-     * Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+     * The field cannot be null, The field value must be greater than 0, The value of this field must be unique, The value of this field must be generated automatically
      */
     private Integer id;
     /**
-     * Поле не может быть null, Строка не может быть пустой
+     * The field cannot be null, String cannot be empty
      */
     private String name;
     /**
-     * Поле не может быть null
+     * The field cannot be null
      */
     private Coordinates coordinates;
     /**
-     * Поле не может быть null, Значение этого поля должно генерироваться автоматически
+     * The field cannot be null, the value of this field must be generated automatically
      */
     private Date creationDate;
     /**
-     * Поле может быть null, Значение поля должно быть больше 0
+     * The field can be null, the field value must be greater than 0
      */
     private Double annualTurnover;
     /**
-     * Поле не может быть null
+     * The field cannot be null
      */
     private OrganizationType type;
     /**
-     * Поле не может быть null
+     * The field cannot be null
      */
     private Address postalAddress;
 
