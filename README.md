@@ -20,6 +20,7 @@ java -jar .\target\laba.jar <filePath>
 {
   "organizations": [
     {
+      "key": "key1",
       "postalAddress": null,
       "coordinates": {
         "x": 923,
@@ -32,6 +33,7 @@ java -jar .\target\laba.jar <filePath>
       "type": "PUBLIC"
     },
     {
+      "key": "bubblegum",
       "postalAddress": "address",
       "coordinates": {
         "x": 2,

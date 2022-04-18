@@ -1,6 +1,8 @@
 package zuev.nikita.structure;
 
-import java.util.Date;
+import zuev.nikita.UserInputManager;
+
+import java.util.*;
 
 /**
  * Data storage structure
@@ -121,14 +123,119 @@ public class Organization implements Comparable<Organization> {
 
     @Override
     public String toString() {
-        return "-- id:\t\t\t" + id + '\n' +
-                "-- name:\t\t" + name + '\n' +
-                "-- coordinates:\n" +
-                "-- -- x:\t\t" + coordinates.getX() + '\n' +
-                "-- -- y:\t\t" + coordinates.getY() + '\n' +
-                "-- creationDate:\t" + creationDate + '\n' +
-                "-- annualTurnover:\t" + annualTurnover + '\n' +
-                "-- type:\t\t" + type + '\n' +
-                "-- postalAddress:\t" + postalAddress.getZipCode();
+        return "-- ID:\t\t\t" + id + '\n' +
+                "-- Название:\t\t" + name + '\n' +
+                "-- Координаты:\n" +
+                "-- -- X:\t\t" + coordinates.getX() + '\n' +
+                "-- -- Y:\t\t" + coordinates.getY() + '\n' +
+                "-- Дата создания:\t" + creationDate + '\n' +
+                "-- Годовой оборот:\t" + annualTurnover + '\n' +
+                "-- Тип организации:\t" + type + '\n' +
+                "-- Адрес:\t\t" + postalAddress.getZipCode();
+    }
+
+    /**
+     * Method for a user to enter a structure through the input stream.
+     *
+     * @param hashtable Collection
+     * @return Organization
+     */
+    public static Organization organizationInput(Hashtable<String, Organization> hashtable) {
+        Set<Integer> ids = new HashSet<>();
+        for (String key : hashtable.keySet())
+            ids.add(hashtable.get(key).getId());
+        int id = 0;
+        for (int i = 1; i <= ids.size() + 1; i++)
+            if (!ids.contains(i)) id = i;
+        return new Organization(id, nameInput(), coordinatesInput(), new Date(), annualTurnoverInput(), organizationTypeInput(), addressInput());
+    }
+
+    private static String nameInput() {
+        boolean flag = true;
+        String name = null;
+        while (flag) {
+            System.out.print("Название: ");
+            name = UserInputManager.input();
+            if (!name.equals("")) flag = false;
+            else System.out.println("name не может быть пустым.");
+        }
+        return name;
+    }
+
+    private static Coordinates coordinatesInput() {
+        long x = 0;
+        double y = 0;
+        boolean flag = true;
+        System.out.println("Координаты:");
+        while (flag) {
+            System.out.print("X: ");
+            try {
+                x = Long.parseLong(UserInputManager.input());
+            } catch (NumberFormatException e) {
+                System.out.println("X дожен быть целым числом.");
+                continue;
+            }
+            if (x <= 923) flag = false;
+            else System.out.println("X дожен быть не больше 923.");
+        }
+        flag = true;
+        while (flag) {
+            System.out.print("Y: ");
+            try {
+                y = Double.parseDouble(UserInputManager.input());
+            } catch (NumberFormatException e) {
+                System.out.println("Y дожен быть дробным числом. Дробное число пишется через точку.");
+                continue;
+            }
+            flag = false;
+        }
+        return new Coordinates(x, y);
+    }
+
+    private static double annualTurnoverInput() {
+        double annualTurnover = 0;
+        boolean flag = true;
+        while (flag) {
+            System.out.print("Годовой оборот: ");
+            try {
+                annualTurnover = Double.parseDouble(UserInputManager.input());
+            } catch (NumberFormatException e) {
+                System.out.println("Годовой оборот дожен быть дробным числом. Дробное число пишется через точку.");
+                continue;
+            }
+            if (annualTurnover > 0) flag = false;
+            else System.out.println("Годовой оборот должен быть больше 0.");
+        }
+        return annualTurnover;
+    }
+
+    private static OrganizationType organizationTypeInput() {
+        OrganizationType type = null;
+        String orgTypeString;
+        boolean flag = true;
+        while (flag) {
+            flag = false;
+            System.out.print("Тип организации (COMMERCIAL - 1, PUBLIC - 2, TRUST - 3): ");
+            orgTypeString = UserInputManager.input();
+            try {
+                type = OrganizationType.valueOf(orgTypeString);
+            } catch (Exception e) {
+                try {
+                    int index = Integer.parseInt(orgTypeString);
+                    type = OrganizationType.values()[index - 1];
+                } catch (NumberFormatException | IndexOutOfBoundsException e2) {
+                    System.out.println("Нет такого типа");
+                    flag = true;
+                }
+            }
+        }
+        return type;
+    }
+
+    private static Address addressInput() {
+        System.out.print("Адрес: ");
+        String zipCode = UserInputManager.input();
+        if (zipCode.equals("")) zipCode = null;
+        return new Address(zipCode);
     }
 }

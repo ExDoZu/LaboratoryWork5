@@ -2,19 +2,24 @@ package zuev.nikita.command;
 
 import zuev.nikita.structure.Organization;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Returns information about the collection
  */
-public class Info implements Command {
-
+public class Info extends Command {
+    public Info(Hashtable<String, Organization> collection) {
+        super(collection);
+    }
 
     @Override
-    public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) {
-        return "Коллекция представляет из себя Hashtable, хранящий объекты типа Organization. В данный момент в коллекции " + hashtable.size() + " элементов.";
+    public String execute(String arg,String savePath,  List<String> history, HashMap<String, Command> commandList, Set<File> scripts) {
+        if(arg!=null)return "Команда не нуждается в аргументе.";
+        return "Коллекция представляет из себя Hashtable, хранящий объекты типа Organization. В данный момент в коллекции " + collection.size() + " элементов.";
     }
 
     @Override

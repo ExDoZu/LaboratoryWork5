@@ -2,26 +2,35 @@ package zuev.nikita.command;
 
 import zuev.nikita.structure.Organization;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 /**
  * Removes from the collection all elements whose key is greater than the specified value.
  */
-public class RemoveGreaterKey implements Command {
+public class RemoveGreaterKey extends Command {
+    public RemoveGreaterKey(Hashtable<String, Organization> collection) {
+        super(collection);
+    }
+
     /**
      * @param arg Given key
      */
     @Override
-    public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
+    public String execute(String arg,String savePath,  List<String> history, HashMap<String, Command> commandList, Set<File> scripts) throws IOException {
         if(arg==null)return "Не был указан Ключ.";
-        List<String> keys = new ArrayList<>(hashtable.keySet());
-        for (String key2 : keys)
-            if (key2.compareTo(arg) > 0) hashtable.remove(key2);
+        List<String> keys = new ArrayList<>(collection.keySet());
+        boolean greaterFound =false;
+        for (String key2 : keys){
+            if (key2.compareTo(arg) > 0) collection.remove(key2);
+            greaterFound = true;
+        }
+        if (greaterFound)
         return "Команда выполнена.";
+        else{
+            return "Нет элементов с ключом больше заданного.";
+        }
     }
 
     @Override

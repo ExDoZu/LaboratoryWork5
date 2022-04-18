@@ -2,23 +2,33 @@ package zuev.nikita.command;
 
 import zuev.nikita.structure.Organization;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 /**
  * Removes an element from the collection by its key.
  */
-public class RemoveKey implements Command {
+public class RemoveKey extends Command {
+    public RemoveKey(Hashtable<String, Organization> collection) {
+        super(collection);
+    }
+
     @Override
-    public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
+    public String execute(String arg,String savePath,  List<String> history, HashMap<String, Command> commandList, Set<File> scripts) throws IOException {
         if (arg == null) return "Не был указан Ключ.";
-        List<String> keys = new ArrayList<>(hashtable.keySet());
+        List<String> keys = new ArrayList<>(collection.keySet());
+        boolean foundKey = false;
         for (String key2 : keys)
-            if (key2.compareTo(arg) == 0) hashtable.remove(key2);
-        return "Команда выполнена.";
+            if (key2.compareTo(arg) == 0) {
+                collection.remove(key2);
+                foundKey=true;
+                break;
+            }
+        if(foundKey)
+            return "Команда выполнена.";
+        else
+            return "Нет элемента с таким ключом.";
     }
 
     @Override

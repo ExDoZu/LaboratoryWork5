@@ -27,54 +27,78 @@ public class JsonDataHandler {
      */
     private static Hashtable<String, Organization> parseText(String text) throws ParseException, WrongDataException {
         Hashtable<String, Organization> hashtable = new Hashtable<>();
-        Organization organization;
-        OrganizationType type;
         Set<Integer> ids = new HashSet<>();
         JSONParser parser = new JSONParser();
         JSONObject root = (JSONObject) parser.parse(text);
         JSONArray organizations = (JSONArray) root.get("organizations");
-        JSONObject org, coord;
-
+        JSONObject org;
         for (int i = 0; i < organizations.size(); i++) {
             org = (JSONObject) organizations.get(i);
-
-            if (org.get("id") == null) throw new WrongDataException("id не может быть null.");
-            int id = Integer.parseInt(org.get("id").toString());
-            if (id <= 0) throw new WrongDataException("id не может быть отрицательно или равно нулю.");
-            if (ids.contains(id)) throw new WrongDataException("id должен быть уникальным.");
-            ids.add(id);
-            String name = (String) org.get("name");
-            if (name == null) throw new WrongDataException("name не может быть null.");
-            if (name.equals("")) throw new WrongDataException("name не может быть пустым.");
-
-            if (org.get("creationDate") == null) throw new WrongDataException("creationDate не может быть null.");
-            Date creationDate = new Date((long) org.get("creationDate"));
-
-            Double annualTurnover = (Double) org.get("annualTurnover");
-            if (annualTurnover != null)
-                if (annualTurnover <= 0)
-                    throw new WrongDataException("annualTurnover не может быть отрицательно или равно нулю.");
-
-            Address postalAddress = new Address((String) org.get("postalAddress"));
-
-            coord = (JSONObject) org.get("coordinates");
-            if (coord == null) throw new WrongDataException("coordinates не может быть null.");
-            if (coord.get("x") == null) throw new WrongDataException("coordinates:x не может быть null.");
-            if (coord.get("y") == null) throw new WrongDataException("coordinates:y не может быть null.");
-            if ((long) coord.get("x") > 923)
-                if (coord.get("x") == null) throw new WrongDataException("coordinates:x не может быть больше 923.");
-            Coordinates coordinates = new Coordinates((long) coord.get("x"), (Double) coord.get("y"));
-
-            if (org.get("type") == null)
-                if (coord.get("x") == null) throw new WrongDataException("type не может быть null.");
-            String typeInString = (String) org.get("type");
-            if (typeInString.equals("COMMERCIAL") || typeInString.equals("PUBLIC") || typeInString.equals("TRUST")) {
-                type = OrganizationType.valueOf(typeInString);
-            } else throw new WrongDataException("Нет такого типа организации \"" + typeInString + "\".");
-            organization = new Organization(id, name, coordinates, creationDate, annualTurnover, type, postalAddress);
-            hashtable.put(Integer.toString(i), organization);
+            hashtable.put(readKey(org, hashtable), new Organization(readId(org, ids), readName(org),
+                    readCoordinates(org), readCreationDate(org), readAnnualTurnover(org), readOrganizationType(org),
+                    readPostalAddress(org)));
         }
         return hashtable;
+    }
+
+    private static String readKey(JSONObject org, Hashtable<String, Organization> hashtable) throws WrongDataException {
+        if (org.get("key") == null) throw new WrongDataException("key не может быть null");
+        String key = org.get("key").toString();
+        if (key.equals("")) throw new WrongDataException("key не может быть пустой строкой");
+        if (hashtable.containsKey(key)) throw new WrongDataException("Несколько элементов с одинаковым ключом.");
+        return key;
+    }
+
+    private static int readId(JSONObject org, Set<Integer> ids) throws WrongDataException {
+        if (org.get("id") == null) throw new WrongDataException("id не может быть null.");
+        int id = Integer.parseInt(org.get("id").toString());
+        if (id <= 0) throw new WrongDataException("id не может быть отрицательно или равно нулю.");
+        if (ids.contains(id)) throw new WrongDataException("id должен быть уникальным.");
+        ids.add(id);
+        return id;
+    }
+
+    private static String readName(JSONObject org) throws WrongDataException {
+        String name = (String) org.get("name");
+        if (name == null) throw new WrongDataException("name не может быть null.");
+        if (name.equals("")) throw new WrongDataException("name не может быть пустым.");
+        return name;
+    }
+
+    private static Date readCreationDate(JSONObject org) throws WrongDataException {
+        if (org.get("creationDate") == null) throw new WrongDataException("creationDate не может быть null.");
+        return new Date((long) org.get("creationDate"));
+    }
+
+    private static Double readAnnualTurnover(JSONObject org) throws WrongDataException {
+        Double annualTurnover = (Double) org.get("annualTurnover");
+        if (annualTurnover != null)
+            if (annualTurnover <= 0)
+                throw new WrongDataException("annualTurnover не может быть отрицательно или равно нулю.");
+        return annualTurnover;
+    }
+
+    private static Address readPostalAddress(JSONObject org) {
+        return new Address((String) org.get("postalAddress"));
+    }
+
+    private static Coordinates readCoordinates(JSONObject org) throws WrongDataException {
+        JSONObject coord = (JSONObject) org.get("coordinates");
+        if (coord == null) throw new WrongDataException("coordinates не может быть null.");
+        if (coord.get("x") == null) throw new WrongDataException("coordinates:x не может быть null.");
+        if (coord.get("y") == null) throw new WrongDataException("coordinates:y не может быть null.");
+        if ((long) coord.get("x") > 923) throw new WrongDataException("coordinates:x не может быть больше 923.");
+        return new Coordinates((long) coord.get("x"), (Double) coord.get("y"));
+    }
+
+    private static OrganizationType readOrganizationType(JSONObject org) throws WrongDataException {
+        if (org.get("type") == null) throw new WrongDataException("type не может быть null.");
+        String orgTypeString = (String) org.get("type");
+        try {
+            return OrganizationType.valueOf(orgTypeString);
+        } catch (Exception e) {
+            throw new WrongDataException("Нет такого типа организации \"" + orgTypeString + "\".");
+        }
     }
 
     /**
@@ -113,6 +137,7 @@ public class JsonDataHandler {
             Organization organization = hashtable.get(key);
             coord.put("x", organization.getCoordinates().getX());
             coord.put("y", organization.getCoordinates().getY());
+            org.put("key", key);
             org.put("coordinates", coord);
             org.put("id", organization.getId());
             org.put("name", organization.getName());

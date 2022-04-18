@@ -3,21 +3,24 @@ package zuev.nikita.command;
 import zuev.nikita.structure.Address;
 import zuev.nikita.structure.Organization;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 /**
- * Returns the values of the postalAddreess field of all elements in descending order as a string.
+ * Returns the values of the postalAddress field of all elements in descending order as a string.
  */
-public class PrintFieldDescendingPostalAddress implements Command {
+public class PrintFieldDescendingPostalAddress extends Command {
+    public PrintFieldDescendingPostalAddress(Hashtable<String, Organization> collection) {
+        super(collection);
+    }
+
     @Override
-    public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
+    public String execute(String arg,String savePath,  List<String> history, HashMap<String, Command> commandList, Set<File> scripts) throws IOException {
+        if(arg!=null)return "Команда не нуждается в аргументе.";
         List<Address> addresses = new ArrayList<>();
-        for (String key : hashtable.keySet())
-            addresses.add(hashtable.get(key).getPostalAddress());
+        for (String key : collection.keySet())
+            addresses.add(collection.get(key).getPostalAddress());
         addresses.sort(Address::compareTo);
         StringBuilder response = new StringBuilder();
         for (int i = addresses.size() - 1; i >= 0; i--)

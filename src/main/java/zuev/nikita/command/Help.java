@@ -2,15 +2,19 @@ package zuev.nikita.command;
 
 import zuev.nikita.structure.Organization;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
+
 /**
  * Return help for available commands.
  */
-public class Help implements Command {
+public class Help extends Command {
     @Override
-    public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) {
+    public String execute(String arg,String savePath,  List<String> history, HashMap<String, Command> commandList, Set<File> scripts) {
+        if (arg != null) return "Команда не нуждается в аргументе.";
         StringBuilder response = new StringBuilder();
         response.append("Все команды должны вводиться в нижнем регистре по одной команде на строке!\n");
         for (String command : commandList.keySet())

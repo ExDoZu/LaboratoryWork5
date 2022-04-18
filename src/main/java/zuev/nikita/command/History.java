@@ -2,17 +2,21 @@ package zuev.nikita.command;
 
 import zuev.nikita.structure.Organization;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Returns the last 10 commands.
  */
-public class History implements Command {
+public class History extends Command {
+
     @Override
-    public String execute(String arg, Hashtable<String, Organization> hashtable, String savePath, List<String> history, HashMap<String, Command> commandList) throws IOException {
+    public String execute(String arg, String savePath, List<String> history, HashMap<String, Command> commandList, Set<File> scripts) throws IOException {
+        if (arg != null) return "Команда не нуждается в аргументе.";
         StringBuilder response = new StringBuilder();
         response.append("История команд:\n");
         for (String command : history)

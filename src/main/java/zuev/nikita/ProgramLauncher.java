@@ -1,9 +1,11 @@
 package zuev.nikita;
 
-import zuev.nikita.command.Invoker;
+import zuev.nikita.command.*;
 import zuev.nikita.structure.Organization;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -14,45 +16,44 @@ import java.util.*;
  */
 public class ProgramLauncher {
     /**
-     * Запуск программы и обработчика команд.
+     * Launches program
      *
-     * @param path путь к файлу для взятия и сохранения данных.
+     * @param path path to file for reading and writing.
      */
     public void launch(String path) {
         boolean flag = true;
-        Scanner input = new Scanner(System.in);
         String response;
-        Hashtable<String, Organization> hashtable = null;
+        Hashtable<String, Organization> collection = null;
         while (flag) {
             File file = new File(path);
             if (path.equals("exit")) break;
-            else if (path.charAt(path.length() - 1) == '/' || path.charAt(path.length() - 1) == '\\') {
+            else if (file.isDirectory()) {
                 System.out.println("Укажите имя файла, а не директории.");
-                path = input.nextLine().trim();
+                path = UserInputManager.input();
             } else if (file.exists()) {
                 if (!(file.canRead() && file.canWrite())) {
                     System.out.println("Нехватка прав доступа. Укажите новое имя файла.");
-                    path = input.nextLine().trim();
+                    path = UserInputManager.input();
                 } else {
                     try {
-                        hashtable = JsonDataHandler.parseFile(path);
+                        collection = JsonDataHandler.parseFile(path);
                         flag = false;
                     } catch (WrongDataException e) {
                         System.out.println("В файле содержатся некорректные данные. " + e.getMessage() +
                                 "\nВведите путь к другому файлу.\n" +
                                 "Для закрытия программы введите команду exit.\n" +
-                                "Желаете продолжить с данным файлом без данных из него (Предыдущие будут потеряны)? Да/Нет. (Нет = exit)");
+                                "Продолжить с данным файлом без данных из него (Предыдущие будут потеряны)? Да/Нет. (Нет = exit)");
                     } catch (Exception e) {
                         System.out.println("Структура файла некорректна или файл поврежден. Введите путь к другому файлу.\n" +
                                 "Для закрытия программы введите команду exit.\n" +
-                                "Желаете продолжить с данным файлом без данных из него (Предыдущие данные будут потеряны)? Да/Нет. (Нет = exit)");
+                                "Продолжить с данным файлом без данных из него (Предыдущие данные будут потеряны)? Да/Нет. (Нет = exit)");
                     }
                     if (flag) {
-                        response = input.nextLine().trim();
+                        response = UserInputManager.input();
                         if (response.equalsIgnoreCase("exit") || response.equalsIgnoreCase("нет") || response.equalsIgnoreCase("0"))
                             flag = false;
                         else if (response.equalsIgnoreCase("да") || response.equalsIgnoreCase("1")) {
-                            hashtable = new Hashtable<>();
+                            collection = new Hashtable<>();
                             flag = false;
                         } else {
                             path = response;
@@ -61,11 +62,55 @@ public class ProgramLauncher {
                 }
             } else {
                 System.out.println("Файл не обнаружен. Укажите новое имя файла.");
-                path = input.nextLine().trim();
+                path = UserInputManager.input();
             }
         }
-
-        if (hashtable == null) return;
-        Invoker.invoke(hashtable, path, new Scanner(System.in));
+        if (collection == null) return;
+        Invoker invoker = new Invoker();
+        invoker.register("exit", new Exit());
+        invoker.register("info", new Info(collection));
+        invoker.register("clear", new Clear(collection));
+        invoker.register("execute_script", new ExecuteScript(collection));
+        invoker.register("filter_greater_than_postal_address", new FilterGreaterThanPostalAddress(collection));
+        invoker.register("help", new Help());
+        invoker.register("history", new History());
+        invoker.register("insert", new Insert(collection));
+        invoker.register("print_field_ascending_postal_address", new PrintFieldAscendingPostalAddress(collection));
+        invoker.register("print_field_descending_postal_address", new PrintFieldDescendingPostalAddress(collection));
+        invoker.register("remove_greater_key", new RemoveGreaterKey(collection));
+        invoker.register("remove_key", new RemoveKey(collection));
+        invoker.register("remove_lower", new RemoveLower(collection));
+        invoker.register("save", new Save(collection));
+        invoker.register("show", new Show(collection));
+        invoker.register("update", new Update(collection));
+        String[] fullCommand;
+        //'while' statement completes after inputting  the 'exit' command
+        while (true) {
+            fullCommand = UserInputManager.input().split(" ");
+            if (!fullCommand[0].equals(""))
+                while (true) {
+                    try {
+                        System.out.println(invoker.invoke(fullCommand, path));
+                        break;
+                    } catch (FileNotFoundException e) {
+                        if (e.getMessage().equals("Нет доступа к файлу из-за нехватки прав доступа.")) {
+                            System.out.println("Нехватка прав доступа. Укажите путь к новому файлу.\n" +
+                                    "cancel - отменить команду сохранения.");
+                            path = UserInputManager.input();
+                        } else {
+                            System.out.println("Файл не найден.");
+                            break;
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Нехватка прав доступа. Укажите путь к новому файлу.\n" +
+                                "cancel - отменить команду сохранения.");
+                        path = UserInputManager.input();
+                    } catch (NumberFormatException e) {
+                        System.out.println("ID должен быть целым числом.");
+                        break;
+                    }
+                    if (path.equals("cancel")) break;
+                }
+        }
     }
 }

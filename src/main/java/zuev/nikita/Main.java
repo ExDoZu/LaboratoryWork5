@@ -17,9 +17,8 @@ public class Main {
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Не указан путь к файлу.\n" +
                         "Укажите путь к файлу или введите exit для выхода из программы.");
-                Scanner input = new Scanner(System.in);
                 args = new String[1];
-                args[0] = input.nextLine();
+                args[0] = UserInputManager.input();
                 if (args[0].equals("exit")) break;
             }
         }
