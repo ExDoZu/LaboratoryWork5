@@ -22,6 +22,7 @@ public class ProgramLauncher {
      */
     public void launch(String path) {
         boolean flag = true;
+        Scanner inputScanner = new Scanner(System.in);
         String response;
         Hashtable<String, Organization> collection = null;
         while (flag) {
@@ -29,11 +30,11 @@ public class ProgramLauncher {
             if (path.equals("exit")) break;
             else if (file.isDirectory()) {
                 System.out.println("Укажите имя файла, а не директории.");
-                path = UserInputManager.input();
+                path = inputScanner.nextLine().trim();
             } else if (file.exists()) {
                 if (!(file.canRead() && file.canWrite())) {
                     System.out.println("Нехватка прав доступа. Укажите новое имя файла.");
-                    path = UserInputManager.input();
+                    path = inputScanner.nextLine().trim();
                 } else {
                     try {
                         collection = JsonDataHandler.parseFile(path);
@@ -42,17 +43,17 @@ public class ProgramLauncher {
                         System.out.println("В файле содержатся некорректные данные. " + e.getMessage() +
                                 "\nВведите путь к другому файлу.\n" +
                                 "Для закрытия программы введите команду exit.\n" +
-                                "Продолжить с данным файлом без данных из него (Предыдущие будут потеряны)? Да/Нет. (Нет = exit)");
+                                "Продолжить с данным файлом без данных из него (Предыдущие будут потеряны)? yes/no. (no = exit)");
                     } catch (Exception e) {
                         System.out.println("Структура файла некорректна или файл поврежден. Введите путь к другому файлу.\n" +
                                 "Для закрытия программы введите команду exit.\n" +
-                                "Продолжить с данным файлом без данных из него (Предыдущие данные будут потеряны)? Да/Нет. (Нет = exit)");
+                                "Продолжить с данным файлом без данных из него (Предыдущие данные будут потеряны)? yes/no. (no = exit)");
                     }
                     if (flag) {
-                        response = UserInputManager.input();
-                        if (response.equalsIgnoreCase("exit") || response.equalsIgnoreCase("нет") || response.equalsIgnoreCase("0"))
+                        response = inputScanner.nextLine().trim();
+                        if (response.equalsIgnoreCase("exit") || response.equalsIgnoreCase("no") || response.equalsIgnoreCase("0"))
                             flag = false;
-                        else if (response.equalsIgnoreCase("да") || response.equalsIgnoreCase("1")) {
+                        else if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("1")) {
                             collection = new Hashtable<>();
                             flag = false;
                         } else {
@@ -62,7 +63,7 @@ public class ProgramLauncher {
                 }
             } else {
                 System.out.println("Файл не обнаружен. Укажите новое имя файла.");
-                path = UserInputManager.input();
+                path = inputScanner.nextLine().trim();
             }
         }
         if (collection == null) return;
@@ -84,19 +85,26 @@ public class ProgramLauncher {
         invoker.register("show", new Show(collection));
         invoker.register("update", new Update(collection));
         String[] fullCommand;
+        String bufPath;
         //'while' statement completes after inputting  the 'exit' command
-        while (true) {
-            fullCommand = UserInputManager.input().split(" ");
+        boolean exitFlag = true;
+        String invokerResponse;
+        while (exitFlag) {
+            fullCommand = inputScanner.nextLine().trim().split(" ");
             if (!fullCommand[0].equals(""))
                 while (true) {
                     try {
-                        System.out.println(invoker.invoke(fullCommand, path));
+                        invokerResponse = invoker.invoke(fullCommand, path);
+                        if (invokerResponse.equals("exit"))
+                            exitFlag = false;
+                        else
+                            System.out.println(invokerResponse);
                         break;
                     } catch (FileNotFoundException e) {
                         if (e.getMessage().equals("Нет доступа к файлу из-за нехватки прав доступа.")) {
                             System.out.println("Нехватка прав доступа. Укажите путь к новому файлу.\n" +
                                     "cancel - отменить команду сохранения.");
-                            path = UserInputManager.input();
+                            bufPath = inputScanner.nextLine().trim();
                         } else {
                             System.out.println("Файл не найден.");
                             break;
@@ -104,12 +112,13 @@ public class ProgramLauncher {
                     } catch (IOException e) {
                         System.out.println("Нехватка прав доступа. Укажите путь к новому файлу.\n" +
                                 "cancel - отменить команду сохранения.");
-                        path = UserInputManager.input();
+                        bufPath = inputScanner.nextLine().trim();
                     } catch (NumberFormatException e) {
                         System.out.println("ID должен быть целым числом.");
                         break;
                     }
-                    if (path.equals("cancel")) break;
+                    if (bufPath.equals("cancel")) break;
+                    else path = bufPath;
                 }
         }
     }
