@@ -1,7 +1,5 @@
 package zuev.nikita.structure;
 
-import zuev.nikita.UserInputManager;
-
 import java.util.*;
 
 /**
@@ -145,17 +143,19 @@ public class Organization implements Comparable<Organization> {
         for (String key : hashtable.keySet())
             ids.add(hashtable.get(key).getId());
         int id = 0;
+        System.out.println("Вводите данные об организации:");
         for (int i = 1; i <= ids.size() + 1; i++)
             if (!ids.contains(i)) id = i;
         return new Organization(id, nameInput(), coordinatesInput(), new Date(), annualTurnoverInput(), organizationTypeInput(), addressInput());
     }
 
     private static String nameInput() {
+        Scanner inputScanner = new Scanner(System.in);
         boolean flag = true;
         String name = null;
         while (flag) {
             System.out.print("Название: ");
-            name = UserInputManager.input();
+            name = inputScanner.nextLine().trim();
             if (!name.equals("")) flag = false;
             else System.out.println("name не может быть пустым.");
         }
@@ -163,6 +163,7 @@ public class Organization implements Comparable<Organization> {
     }
 
     private static Coordinates coordinatesInput() {
+        Scanner inputScanner = new Scanner(System.in);
         long x = 0;
         double y = 0;
         boolean flag = true;
@@ -170,7 +171,7 @@ public class Organization implements Comparable<Organization> {
         while (flag) {
             System.out.print("X: ");
             try {
-                x = Long.parseLong(UserInputManager.input());
+                x = Long.parseLong(inputScanner.nextLine().trim());
             } catch (NumberFormatException e) {
                 System.out.println("X дожен быть целым числом.");
                 continue;
@@ -182,7 +183,7 @@ public class Organization implements Comparable<Organization> {
         while (flag) {
             System.out.print("Y: ");
             try {
-                y = Double.parseDouble(UserInputManager.input());
+                y = Double.parseDouble(inputScanner.nextLine().trim());
             } catch (NumberFormatException e) {
                 System.out.println("Y дожен быть дробным числом. Дробное число пишется через точку.");
                 continue;
@@ -193,12 +194,13 @@ public class Organization implements Comparable<Organization> {
     }
 
     private static double annualTurnoverInput() {
+        Scanner inputScanner = new Scanner(System.in);
         double annualTurnover = 0;
         boolean flag = true;
         while (flag) {
             System.out.print("Годовой оборот: ");
             try {
-                annualTurnover = Double.parseDouble(UserInputManager.input());
+                annualTurnover = Double.parseDouble(inputScanner.nextLine().trim());
             } catch (NumberFormatException e) {
                 System.out.println("Годовой оборот дожен быть дробным числом. Дробное число пишется через точку.");
                 continue;
@@ -210,13 +212,14 @@ public class Organization implements Comparable<Organization> {
     }
 
     private static OrganizationType organizationTypeInput() {
+        Scanner inputScanner = new Scanner(System.in);
         OrganizationType type = null;
         String orgTypeString;
         boolean flag = true;
         while (flag) {
             flag = false;
             System.out.print("Тип организации (COMMERCIAL - 1, PUBLIC - 2, TRUST - 3): ");
-            orgTypeString = UserInputManager.input();
+            orgTypeString = inputScanner.nextLine().trim();
             try {
                 type = OrganizationType.valueOf(orgTypeString);
             } catch (Exception e) {
@@ -233,8 +236,9 @@ public class Organization implements Comparable<Organization> {
     }
 
     private static Address addressInput() {
+        Scanner inputScanner = new Scanner(System.in);
         System.out.print("Адрес: ");
-        String zipCode = UserInputManager.input();
+        String zipCode = inputScanner.nextLine().trim();
         if (zipCode.equals("")) zipCode = null;
         return new Address(zipCode);
     }

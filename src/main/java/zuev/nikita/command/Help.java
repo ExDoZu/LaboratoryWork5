@@ -1,10 +1,8 @@
 package zuev.nikita.command;
 
-import zuev.nikita.structure.Organization;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 

@@ -1,5 +1,7 @@
 package zuev.nikita;
 
+
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -9,6 +11,7 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
+        Scanner inputScanner = new Scanner(System.in);
         ProgramLauncher programLauncher = new ProgramLauncher();
         while (true) {
             try {
@@ -18,8 +21,10 @@ public class Main {
                 System.out.println("Не указан путь к файлу.\n" +
                         "Укажите путь к файлу или введите exit для выхода из программы.");
                 args = new String[1];
-                args[0] = UserInputManager.input();
+                args[0] = inputScanner.nextLine().trim();
                 if (args[0].equals("exit")) break;
+            } catch (NoSuchElementException e) {
+                break;
             }
         }
     }

@@ -1,6 +1,5 @@
 package zuev.nikita.command;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import zuev.nikita.structure.Organization;
 
 import java.io.File;
@@ -19,10 +18,14 @@ public class Insert extends Command {
     }
 
     @Override
-    public String execute(String arg,String savePath,  List<String> history, HashMap<String, Command> commandList, Set<File> scripts) throws IOException {
+    public String execute(String arg, String savePath, List<String> history, HashMap<String, Command> commandList, Set<File> scripts) throws IOException {
         if (arg == null) return "Не был указан Ключ.";
-        collection.put(arg, Organization.organizationInput(collection));
-        return "Данные успешно введены.";
+        if (collection.containsKey(arg)) {
+            return "Уже есть элемент с таким ключом.";
+        } else {
+            collection.put(arg, Organization.organizationInput(collection));
+            return "Данные успешно введены.";
+        }
     }
 
     @Override
