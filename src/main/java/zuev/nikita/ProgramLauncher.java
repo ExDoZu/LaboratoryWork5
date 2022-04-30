@@ -90,7 +90,7 @@ public class ProgramLauncher {
         boolean exitFlag = true;
         String invokerResponse;
         while (exitFlag) {
-            fullCommand = inputScanner.nextLine().trim().split(" ");
+            fullCommand = inputScanner.nextLine().trim().split("\\s+", 2);
             if (!fullCommand[0].equals(""))
                 while (true) {
                     try {
