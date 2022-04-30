@@ -44,14 +44,10 @@ public class Invoker {
         if (registeredCommands.containsKey(fullCommand[0])) {
             commandsHistory.remove(0);
             commandsHistory.add(fullCommand[0]);
-            switch (fullCommand.length) {
-                case 1:
-                    return registeredCommands.get(fullCommand[0]).execute(null, path, commandsHistory, registeredCommands, scripts);
-                case 2:
-                    return registeredCommands.get(fullCommand[0]).execute(fullCommand[1], path, commandsHistory, registeredCommands, scripts);
-                default:
-                    return "Никакая команда не может иметь больше одного аргумента.";
-            }
+            if (fullCommand.length == 1)
+                return registeredCommands.get(fullCommand[0]).execute(null, path, commandsHistory, registeredCommands, scripts);
+            else
+                return registeredCommands.get(fullCommand[0]).execute(fullCommand[1], path, commandsHistory, registeredCommands, scripts);
         } else {
             return "Команда " + fullCommand[0] + " не существует.";
         }
