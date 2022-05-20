@@ -1,6 +1,6 @@
 # Laboratory work №5
 
-### Input the following commands to build and run the project:
+### Enter the following commands to build and run the project:
 
 ```shell
 mvn package
@@ -12,7 +12,7 @@ java -jar .\target\laba.jar <filePath>
 
 ###### \<filePath> - you need to specify the path to the data file.
 
-### An example of a valid data file:
+### Example of a valid data file:
 
 `data.json`
 
